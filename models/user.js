@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     },
     history: {
         type: Array,
-        default: "",
+        default: [],
     },
 }, { timestamps: true });
 
