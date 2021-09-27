@@ -1,5 +1,6 @@
 const formidable = require("formidable");
 const _ = require("lodash");
+const fs = require("fs");
 const Center = require("../models/center");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
@@ -8,12 +9,9 @@ exports.create = (req, res) => {
     form.keepExtension = true;
     form.parse(req, (err, fields, files) => {
         if (err) {
-            return (
-                res.status(400),
-                json({
-                    error: "Image could not be uploaded",
-                })
-            );
+            return res.status(400).json({
+                error: "Image could not be uploaded",
+            });
         }
         let center = new Center(fields);
 
@@ -22,9 +20,9 @@ exports.create = (req, res) => {
             center.photo.contentType = files.photo.type;
         }
 
-        product.save((err, result) => {
+        center.save((err, result) => {
             if (err) {
-                return res.status(400).json({ error: errorHandler(err) });
+                return res.status(400).json({ error: errorHandler(err), save: true });
             }
             res.json(result);
         });

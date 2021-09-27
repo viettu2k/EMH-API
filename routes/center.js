@@ -10,13 +10,7 @@ const {
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.post(
-    "/centers/create/:userId",
-    requireSignin,
-    isAuth,
-    isMedicalStaff,
-    create
-);
+router.post("/centers/create/:userId", requireSignin, isAuth, isAdmin, create);
 
 router.param("userId", userById);
 
