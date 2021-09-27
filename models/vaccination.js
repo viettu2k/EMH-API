@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const vaccinationSchema = new mongoose.Schema({
     name: {
@@ -20,6 +21,8 @@ const vaccinationSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    participants: [{ type: ObjectId, ref: "User", default: [] }],
+    createdBy: { type: ObjectId, ref: "User" },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Vaccination", vaccinationSchema);

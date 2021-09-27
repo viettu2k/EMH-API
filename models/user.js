@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    phoneNumber: {
+        type: String,
+        maxlength: 11,
+    },
     about: {
         type: String,
         trim: true,
@@ -28,10 +32,11 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    history: {
-        type: Array,
-        default: [],
+    photo: {
+        data: Buffer,
+        contentType: String,
     },
+    history: [{ type: ObjectId, ref: "Vaccination", default: [] }],
 }, { timestamps: true });
 
 // virtual field
