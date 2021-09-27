@@ -4,6 +4,23 @@ const fs = require("fs");
 const Center = require("../models/center");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 
+exports.centerById = (req, res, next, id) => {
+    Center.findById(id).exec((err, center) => {
+        if (err || !center) {
+            return res.status(400).json({
+                error: "Center not found",
+            });
+        }
+        req.center = center;
+        next();
+    });
+};
+
+exports.read = (req, res) => {
+    req.center.photo = undefined;
+    return res.json(req.center)
+}
+
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtension = true;

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { create } = require("../controllers/vaccination");
+const { create, vaccinationById } = require("../controllers/vaccination");
 const {
     requireSignin,
     isAuth,
@@ -9,6 +9,12 @@ const {
     isMedicalStaff,
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
+
+router.get("/vaccinations/:vaccinationId", (req, res) => {
+    res.json({
+        vaccination: req.vaccination,
+    });
+});
 
 router.post(
     "/vaccinations/create/:userId",
@@ -19,5 +25,6 @@ router.post(
 );
 
 router.param("userId", userById);
+router.param("vaccinationId", vaccinationById);
 
 module.exports = router;
