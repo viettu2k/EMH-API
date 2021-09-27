@@ -15,7 +15,6 @@ router.get("/vaccinations/:vaccinationId", (req, res) => {
         vaccination: req.vaccination,
     });
 });
-
 router.post(
     "/vaccinations/create/:userId",
     requireSignin,

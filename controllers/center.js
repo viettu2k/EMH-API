@@ -18,8 +18,8 @@ exports.centerById = (req, res, next, id) => {
 
 exports.read = (req, res) => {
     req.center.photo = undefined;
-    return res.json(req.center)
-}
+    return res.json(req.center);
+};
 
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
@@ -54,9 +54,21 @@ exports.create = (req, res) => {
 
         center.save((err, result) => {
             if (err) {
-                return res.status(400).json({ error: errorHandler(err), save: true });
+                return res.status(400).json({ error: errorHandler(err) });
             }
             res.json(result);
+        });
+    });
+};
+
+exports.remove = (req, res) => {
+    let center = req.center;
+    center.remove((err, deletedCenter) => {
+        if (err) {
+            return res.status(400).json({ error: errorHandler(err) });
+        }
+        res.json({
+            message: "Center deleted successfully",
         });
     });
 };
