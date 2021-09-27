@@ -7,11 +7,20 @@ const centerSchema = new mongoose.Schema({
         trim: true,
         required: true,
         maxlength: 100,
+        unique: true,
     },
     description: {
         type: String,
         trim: true,
+        required: true,
         maxlength: 2000,
+    },
+    hotLine: {
+        type: String,
+        maxlength: 11,
+        trim: true,
+        required: true,
+        unique: true,
     },
     address: {
         type: String,
