@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, vaccinationById, read } = require("../controllers/vaccination");
+const {
+    create,
+    vaccinationById,
+    read,
+    remove,
+    update,
+    list,
+} = require("../controllers/vaccination");
 const {
     requireSignin,
     isAuth,
@@ -17,6 +24,21 @@ router.post(
     isMedicalStaff,
     create
 );
+router.put(
+    "/vaccinations/:vaccinationId/:userId",
+    requireSignin,
+    isAuth,
+    isMedicalStaff,
+    update
+);
+router.delete(
+    "/vaccinations/:vaccinationId/:userId",
+    requireSignin,
+    isAuth,
+    isMedicalStaff,
+    remove
+);
+router.get("/vaccinations", list);
 
 router.param("userId", userById);
 router.param("vaccinationId", vaccinationById);

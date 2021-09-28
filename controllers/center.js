@@ -33,7 +33,6 @@ exports.create = (req, res) => {
 
         // check for all fields
         const { name, description, address, hotLine } = fields;
-        console.log(name, description, address, hotLine);
         if (!name || !description || !address || !hotLine) {
             return res.status(400).json({
                 error: "All fields  are required",
