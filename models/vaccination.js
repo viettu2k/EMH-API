@@ -23,6 +23,7 @@ const vaccinationSchema = new mongoose.Schema({
     },
     participants: [{ type: ObjectId, ref: "User", default: [] }],
     createdBy: { type: ObjectId, ref: "User" },
+    owner: { type: ObjectId, ref: "Center" },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Vaccination", vaccinationSchema);

@@ -69,13 +69,26 @@ exports.remove = (req, res) => {
     });
 };
 
+/* default query */
+/* api/vaccinations?sortBy=createdAt&order=desc&limit=5 */
+
 exports.list = (req, res) => {
-    Vaccination.find().exec((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err),
-            });
-        }
-        res.json(data);
-    });
+    let order = req.query.order ? req.query.order : "desc";
+    let sortBy = req.query.sortBy ? req.query.sortBy : "createdAt";
+    let limit = req.query.limit ? parseInt(req.query.limit) : 5;
+
+    Vaccination.find()
+        .populate(owner)
+        .sort([
+            [sortBy, order]
+        ])
+        .limit(limit)
+        .exec((err, vaccinations) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err),
+                });
+            }
+            res.send(vaccinations);
+        });
 };
