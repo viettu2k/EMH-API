@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, vaccinationById } = require("../controllers/vaccination");
+const { create, vaccinationById, read } = require("../controllers/vaccination");
 const {
     requireSignin,
     isAuth,
@@ -9,11 +9,7 @@ const {
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.get("/vaccinations/:vaccinationId", (req, res) => {
-    res.json({
-        vaccination: req.vaccination,
-    });
-});
+router.get("/vaccinations/:vaccinationId", read);
 router.post(
     "/vaccinations/:userId",
     requireSignin,

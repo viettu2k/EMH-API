@@ -13,6 +13,10 @@ exports.vaccinationById = (req, res, next, id) => {
     });
 };
 
+exports.read = (req, res) => {
+    return res.json(req.vaccination);
+};
+
 exports.create = (req, res) => {
     const vaccination = new Vaccination(req.body);
     vaccination.save((err, data) => {
