@@ -7,6 +7,7 @@ const {
     read,
     remove,
     update,
+    list,
 } = require("../controllers/center");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
@@ -27,6 +28,7 @@ router.put(
     isAdmin,
     update
 );
+router.get("/centers", list);
 
 router.param("userId", userById);
 router.param("centerId", centerById);

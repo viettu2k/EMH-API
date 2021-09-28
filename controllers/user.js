@@ -9,3 +9,14 @@ exports.userById = (req, res, next, id) => {
         next();
     });
 };
+
+exports.list = (req, res) => {
+    User.find().exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err),
+            });
+        }
+        res.json(data);
+    });
+};
