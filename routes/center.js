@@ -12,7 +12,7 @@ const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
 router.get("/centers/:centerId", read);
-router.post("/centers/create/:userId", requireSignin, isAuth, isAdmin, create);
+router.post("/centers/:userId", requireSignin, isAuth, isAdmin, create);
 router.delete(
     "/centers/:centerId/:userId",
     requireSignin,

@@ -5,7 +5,6 @@ const { create, vaccinationById } = require("../controllers/vaccination");
 const {
     requireSignin,
     isAuth,
-    isAdmin,
     isMedicalStaff,
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
@@ -16,7 +15,7 @@ router.get("/vaccinations/:vaccinationId", (req, res) => {
     });
 });
 router.post(
-    "/vaccinations/create/:userId",
+    "/vaccinations/:userId",
     requireSignin,
     isAuth,
     isMedicalStaff,
