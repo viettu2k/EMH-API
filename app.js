@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
+const fs = require("fs");
 require("dotenv").config();
 
 // import routes
@@ -23,6 +24,19 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
+
+// apiDocs
+app.get("/api", (req, res) => {
+    fs.readFile("docs/apiDocs.json", (err, data) => {
+        if (err) {
+            res.status(400).json({
+                error: err,
+            });
+        }
+        const docs = JSON.parse(data);
+        res.json(docs);
+    });
+});
 
 // routes middleware
 app.use("/api", authRoutes);

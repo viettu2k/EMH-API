@@ -1,0 +1,16 @@
+{
+    "/api": "api docs",
+    "/api/signup": "signup",
+    "/api/signin": "signin",
+    "/api/signout": "signout",
+    "/api/users": "get all users",
+    "/api/users/:userId": "get user by id",
+    "/api/centers": "get all center",
+    "/api/centers/:centerId": "get center by id",
+    "/api/centers/:userId": "create a new center by user",
+    "/api/centers/:centerId/:userId": "update/delete center by user",
+    "/api/vaccinations": "get all vaccinations",
+    "/api/vaccinations/:vaccinationId": "get vaccination by id",
+    "/api/vaccinations/:userId": "create a new vaccination by user",
+    "/api/vaccinations/:centerId/:userId": "update/delete vaccination by user"
+}
