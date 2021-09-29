@@ -122,3 +122,11 @@ exports.list = (req, res) => {
         res.json(data);
     });
 };
+
+exports.photo = (req, res, next) => {
+    if (req.center.photo.data) {
+        res.set("Content-Type", req.center.photo.contentType);
+        return res.send(req.center.photo.data);
+    }
+    next();
+};

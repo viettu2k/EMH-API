@@ -9,6 +9,7 @@
     "/api/centers/:centerId": "get center by id",
     "/api/centers/:userId": "create a new center by user",
     "/api/centers/:centerId/:userId": "update/delete center by user",
+    "/api/centers/photo/:centerId": "get center photo by id",
     "/api/vaccinations": "get all vaccinations",
     "/api/vaccinations/:vaccinationId": "get vaccination by id",
     "/api/vaccinations/:userId": "create a new vaccination by user",

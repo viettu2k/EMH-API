@@ -8,6 +8,7 @@ const {
     remove,
     update,
     list,
+    photo,
 } = require("../controllers/center");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
@@ -29,6 +30,7 @@ router.put(
     update
 );
 router.get("/centers", list);
+router.get("/centers/photo/:centerId", photo);
 
 router.param("userId", userById);
 router.param("centerId", centerById);
