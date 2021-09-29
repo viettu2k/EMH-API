@@ -78,7 +78,7 @@ exports.list = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 5;
 
     Vaccination.find()
-        .populate(owner)
+        .populate("owner")
         .sort([
             [sortBy, order]
         ])
@@ -86,7 +86,7 @@ exports.list = (req, res) => {
         .exec((err, vaccinations) => {
             if (err) {
                 return res.status(400).json({
-                    error: errorHandler(err),
+                    error: "Vaccinations not found",
                 });
             }
             res.send(vaccinations);
