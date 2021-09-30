@@ -16,7 +16,7 @@ const centerRoutes = require("./routes/center");
 // app
 const app = express();
 
-//db
+// connect db
 mongoose.connect(process.env.DATABASE).then(() => console.log("DB connected"));
 
 // middlewares
@@ -38,7 +38,7 @@ app.get("/api", (req, res) => {
     });
 });
 
-// routes middleware
+// routes middlewares
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", vaccinationRoutes);
