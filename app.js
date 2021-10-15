@@ -11,6 +11,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const vaccinationRoutes = require("./routes/vaccination");
+const testRoutes = require("./routes/test");
 const centerRoutes = require("./routes/center");
 
 // app
@@ -42,6 +43,7 @@ app.get("/api", (req, res) => {
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", vaccinationRoutes);
+app.use("/api", testRoutes);
 app.use("/api", centerRoutes);
 
 const port = process.env.PORT || 8000;
