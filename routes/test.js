@@ -16,23 +16,23 @@ const {
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
-router.get("/testes/:testId", read);
-router.post("/testes/:userId", requireSignin, isAuth, isMedicalStaff, create);
+router.get("/tests/:testId", read);
+router.post("/tests/:userId", requireSignin, isAuth, isMedicalStaff, create);
 router.put(
-    "/testes/:testId/:userId",
+    "/tests/:testId/:userId",
     requireSignin,
     isAuth,
     isMedicalStaff,
     update
 );
 router.delete(
-    "/testes/:testId/:userId",
+    "/tests/:testId/:userId",
     requireSignin,
     isAuth,
     isMedicalStaff,
     remove
 );
-router.get("/testes", list);
+router.get("/tests", list);
 
 router.param("userId", userById);
 router.param("testId", testById);
