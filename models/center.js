@@ -15,7 +15,7 @@ const centerSchema = new mongoose.Schema({
         required: true,
         maxlength: 2000,
     },
-    hotLine: {
+    hotline: {
         type: String,
         maxlength: 11,
         trim: true,
@@ -31,7 +31,6 @@ const centerSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
-    members: [{ type: ObjectId, ref: "User", default: [] }],
     vaccinations: [{ type: ObjectId, ref: "Vaccination", default: [] }],
 }, { timestamps: true });
 
