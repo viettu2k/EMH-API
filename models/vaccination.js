@@ -12,14 +12,18 @@ const vaccinationSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        maxlength: 30,
     },
     notes: {
         type: String,
         trim: true,
+        required: true,
+        maxlength: 2000,
     },
     address: {
         type: String,
         trim: true,
+        maxlength: 100,
     },
     participants: [{ type: ObjectId, ref: "User", default: [] }],
     ownership: { type: ObjectId, ref: "Center" },

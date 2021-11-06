@@ -19,8 +19,8 @@ exports.read = (req, res) => {
 
 exports.create = (req, res) => {
     const vaccination = new Vaccination(req.body);
-    const { name, about, type, address } = vaccination;
-    if (!name || !about || !type || !address) {
+    const { name, notes, type, address } = vaccination;
+    if (!name || !notes || !type || !address) {
         return res.status(400).json({
             error: "All fields  are required",
         });
@@ -31,7 +31,7 @@ exports.create = (req, res) => {
                 error: errorHandler(err),
             });
         }
-        res.json({ data });
+        res.json(data);
     });
 };
 
