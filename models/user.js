@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const { v1: uuidv1 } = require("uuid");
-const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -20,10 +19,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    phoneNumber: {
-        type: String,
-        maxlength: 11,
-    },
     about: {
         type: String,
         trim: true,
@@ -33,11 +28,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    photo: {
-        data: Buffer,
-        contentType: String,
+    history: {
+        type: Array,
+        default: [],
     },
-    history: [{ type: ObjectId, ref: "Vaccination", default: [] }],
 }, { timestamps: true });
 
 // virtual field
