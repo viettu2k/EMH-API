@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
+    resetPasswordLink: {
+        data: String,
+        default: "",
+    },
 }, { timestamps: true });
 
 // virtual field
