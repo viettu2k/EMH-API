@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken"); // to generate signed token
 const expressJwt = require("express-jwt"); // for authorization check
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
-const { sendEmail } = require("../helpers");
+const { sendEmail } = require("../helpers/sendEmail");
 const dotenv = require("dotenv");
 dotenv.config();
 
