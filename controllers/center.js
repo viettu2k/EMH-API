@@ -32,8 +32,8 @@ exports.create = (req, res) => {
         }
 
         // check for all fields
-        const { name, description, address, hotline } = fields;
-        if (!name || !description || !address || !hotline) {
+        const { name, description, address, phoneNumber } = fields;
+        if (!name || !description || !address || !phoneNumber) {
             return res.status(400).json({
                 error: "All fields  are required",
             });
@@ -52,6 +52,7 @@ exports.create = (req, res) => {
         }
 
         center.save((err, result) => {
+            console.log(err);
             if (err) {
                 return res.status(400).json({ error: errorHandler(err) });
             }
@@ -83,8 +84,8 @@ exports.update = (req, res) => {
         }
 
         // check for all fields
-        const { name, description, address, hotLine } = fields;
-        if (!name || !description || !address || !hotLine) {
+        const { name, description, address, hotline } = fields;
+        if (!name || !description || !address || !hotline) {
             return res.status(400).json({
                 error: "All fields  are required",
             });

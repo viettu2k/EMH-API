@@ -15,12 +15,12 @@ const centerSchema = new mongoose.Schema({
         required: true,
         maxlength: 2000,
     },
-    hotline: {
+    phoneNumber: {
         type: String,
         maxlength: 11,
-        trim: true,
         required: true,
         unique: true,
+        sparse: true,
     },
     address: {
         type: String,
