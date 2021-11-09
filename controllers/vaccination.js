@@ -19,8 +19,8 @@ exports.read = (req, res) => {
 
 exports.create = (req, res) => {
     const vaccination = new Vaccination(req.body);
-    const { name, notes, type, address } = vaccination;
-    if (!name || !notes || !type || !address) {
+    const { name, notes, type, address, limit, ownership } = vaccination;
+    if (!name || !notes || !type || !address || !limit || !ownership) {
         return res.status(400).json({
             error: "All fields  are required",
         });
@@ -94,12 +94,14 @@ exports.remove = (req, res) => {
 // };
 
 exports.list = (req, res) => {
-    Vaccination.find().exec((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err),
-            });
-        }
-        res.json(data);
-    });
+    Vaccination.find()
+        .sort("-createdAt")
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err),
+                });
+            }
+            res.json(data);
+        });
 };
