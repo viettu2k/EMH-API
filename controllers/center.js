@@ -83,14 +83,6 @@ exports.update = (req, res) => {
             });
         }
 
-        // check for all fields
-        const { name, description, address, hotline } = fields;
-        if (!name || !description || !address || !hotline) {
-            return res.status(400).json({
-                error: "All fields  are required",
-            });
-        }
-
         let center = req.center;
         center = _.extend(center, fields);
 
