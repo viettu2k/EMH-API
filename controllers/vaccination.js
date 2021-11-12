@@ -1,5 +1,6 @@
 const Vaccination = require("../models/vaccination");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const _ = require("lodash");
 
 exports.vaccinationById = (req, res, next, id) => {
     Vaccination.findById(id).exec((err, vaccination) => {
@@ -36,17 +37,8 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    const vaccination = req.vaccination;
-    const { name, about, type, address } = req.body;
-    if (!name || !about || !type || !address) {
-        return res.status(400).json({
-            error: "All fields  are required",
-        });
-    }
-    vaccination.name = name;
-    vaccination.about = about;
-    vaccination.type = type;
-    vaccination.address = address;
+    let vaccination = req.vaccination;
+    vaccination = _.extend(vaccination, req.body);
     vaccination.save((err, data) => {
         if (err) {
             return res.status(400).json({
