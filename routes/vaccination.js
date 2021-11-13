@@ -8,7 +8,7 @@ const {
     remove,
     update,
     list,
-    listRelated,
+    createByUser,
 } = require("../controllers/vaccination");
 const {
     requireSignin,
