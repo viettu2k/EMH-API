@@ -101,7 +101,7 @@ exports.list = (req, res) => {
 
 exports.createByUser = (req, res) => {
     Vaccination.find({ createdBy: req.profile._id })
-        .populate("postedBy", "_id name")
+        .populate("createdBy", "_id name")
         .sort("_created")
         .exec((err, vaccinations) => {
             if (err) {
