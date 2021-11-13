@@ -26,6 +26,7 @@ exports.create = (req, res) => {
             error: "All fields  are required",
         });
     }
+    vaccination.createdBy = req.profile;
     vaccination.save((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -95,5 +96,17 @@ exports.list = (req, res) => {
                 });
             }
             res.json(data);
+        });
+};
+
+exports.createByUser = (req, res) => {
+    Vaccination.find({ createdBy: req.profile._id })
+        .populate("postedBy", "_id name")
+        .sort("_created")
+        .exec((err, vaccinations) => {
+            if (err) {
+                return res.status(400).json({ error: err });
+            }
+            res.json(vaccinations);
         });
 };

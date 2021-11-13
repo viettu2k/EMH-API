@@ -40,7 +40,12 @@ router.delete(
     remove
 );
 router.get("/vaccinations", list);
-
+router.get(
+    "/vaccinations/by/:userId",
+    requireSignin,
+    isMedicalStaff,
+    createByUser
+);
 router.param("userId", userById);
 router.param("vaccinationId", vaccinationById);
 
