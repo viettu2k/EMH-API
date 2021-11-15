@@ -102,7 +102,7 @@ exports.list = (req, res) => {
 exports.createByUser = (req, res) => {
     Vaccination.find({ createdBy: req.profile._id })
         .populate("createdBy", "_id name")
-        .sort("_created")
+        .sort("-createdAt")
         .exec((err, vaccinations) => {
             if (err) {
                 return res.status(400).json({ error: err });
