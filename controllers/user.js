@@ -19,7 +19,6 @@ exports.read = (req, res) => {
     return res.json(req.profile);
 };
 
-
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
     const { name, password } = req.body;

@@ -9,6 +9,7 @@ const {
     update,
     list,
     createByUser,
+    listByCenter,
 } = require("../controllers/vaccination");
 const {
     requireSignin,
@@ -16,6 +17,7 @@ const {
     isMedicalStaff,
 } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
+const { centerById } = require("../controllers/center");
 
 router.get("/vaccinations/:vaccinationId", read);
 router.post(
@@ -46,6 +48,9 @@ router.get(
     isMedicalStaff,
     createByUser
 );
+router.get("/vaccinations/center/:centerId", listByCenter);
+
+router.param("centerId", centerById);
 router.param("userId", userById);
 router.param("vaccinationId", vaccinationById);
 

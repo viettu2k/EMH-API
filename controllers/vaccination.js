@@ -110,3 +110,15 @@ exports.createByUser = (req, res) => {
             res.json(vaccinations);
         });
 };
+
+exports.listByCenter = (req, res) => {
+    Vaccination.find({ ownership: req.center._id })
+        .populate("ownership", "_id name")
+        .sort("-createdAt")
+        .exec((err, vaccinations) => {
+            if (err) {
+                return res.status(400).json({ error: err });
+            }
+            res.json(vaccinations);
+        });
+};
