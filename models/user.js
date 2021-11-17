@@ -19,11 +19,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    about: {
+    salt: String,
+    address: {
         type: String,
         trim: true,
     },
-    salt: String,
+    phoneNumber: {
+        type: String,
+        maxlength: 11,
+        required: true,
+        unique: true,
+    },
     role: {
         type: Number,
         default: 0,
