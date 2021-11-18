@@ -2,28 +2,21 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const testSchema = new mongoose.Schema({
-    name: {
+    fullName: {
         type: String,
         trim: true,
         required: true,
         maxlength: 100,
     },
-    type: {
+    phoneNumber: {
         type: String,
+        maxlength: 11,
         required: true,
-        trim: true,
+        unique: true,
     },
-    about: {
-        type: String,
-        trim: true,
-    },
-    address: {
-        type: String,
-        trim: true,
-    },
-    participants: [{ type: ObjectId, ref: "User", default: [] }],
+    testTime: { type: Date },
     createdBy: { type: ObjectId, ref: "User" },
-    owner: { type: ObjectId, ref: "Center" },
+    place: { type: ObjectId, ref: "Center" },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Test", testSchema);
