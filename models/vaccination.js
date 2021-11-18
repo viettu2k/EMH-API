@@ -27,6 +27,10 @@ const vaccinationSchema = new mongoose.Schema({
     limit: {
         type: Number,
     },
+    dueDate: {
+        type: Date,
+        required: true,
+    },
     createdBy: {
         type: ObjectId,
         ref: "User",
