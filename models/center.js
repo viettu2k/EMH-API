@@ -20,7 +20,6 @@ const centerSchema = new mongoose.Schema({
         maxlength: 11,
         required: true,
         unique: true,
-        sparse: true,
     },
     address: {
         type: String,
@@ -32,6 +31,7 @@ const centerSchema = new mongoose.Schema({
         contentType: String,
     },
     vaccinations: [{ type: ObjectId, ref: "Vaccination", default: [] }],
+    tests: [{ type: ObjectId, ref: "Test", default: [] }],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Center", centerSchema);
