@@ -14,6 +14,7 @@ const userRoutes = require("./routes/user");
 const vaccinationRoutes = require("./routes/vaccination");
 const testRoutes = require("./routes/test");
 const centerRoutes = require("./routes/center");
+const notificationRoutes = require("./routes/notification");
 
 // app
 const app = express();
@@ -47,6 +48,7 @@ app.use("/api", userRoutes);
 app.use("/api", vaccinationRoutes);
 app.use("/api", testRoutes);
 app.use("/api", centerRoutes);
+app.use("/api", notificationRoutes);
 
 const port = process.env.PORT || 8000;
 
