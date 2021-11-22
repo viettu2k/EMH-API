@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const _ = require("lodash");
 
 exports.userById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
@@ -21,7 +22,7 @@ exports.read = (req, res) => {
 
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-    const { name, password } = req.body;
+    const { name, password, dob, address, phoneNumber } = req.body;
 
     User.findOne({ _id: req.profile._id }, (err, user) => {
         if (err || !user) {
@@ -46,7 +47,9 @@ exports.update = (req, res) => {
                 user.password = password;
             }
         }
-
+        user.address = address;
+        user.dob = dob;
+        user.phoneNumber = phoneNumber;
         user.save((err, updatedUser) => {
             if (err) {
                 console.log("USER UPDATE ERROR", err);
