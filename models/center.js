@@ -31,7 +31,6 @@ const centerSchema = new mongoose.Schema({
         contentType: String,
     },
     vaccinations: [{ type: ObjectId, ref: "Vaccination", default: [] }],
-    tests: [{ type: ObjectId, ref: "Test", default: [] }],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Center", centerSchema);

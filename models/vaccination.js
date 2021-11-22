@@ -27,7 +27,7 @@ const vaccinationSchema = new mongoose.Schema({
     limit: {
         type: Number,
     },
-    dueDate: {
+    vaccineDate: {
         type: Date,
         required: true,
     },
