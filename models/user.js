@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         maxlength: 11,
-        unique: true,
     },
     dob: {
         type: Date,
