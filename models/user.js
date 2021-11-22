@@ -28,8 +28,10 @@ const userSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         maxlength: 11,
-        required: true,
         unique: true,
+    },
+    dob: {
+        type: Date,
     },
     role: {
         type: Number,
