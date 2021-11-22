@@ -20,8 +20,16 @@ exports.read = (req, res) => {
 
 exports.create = (req, res) => {
     const vaccination = new Vaccination(req.body);
-    const { name, notes, type, address, limit, ownership } = vaccination;
-    if (!name || !notes || !type || !address || !limit || !ownership) {
+    const { name, notes, type, address, limit, ownership, vaccineDate } =
+    vaccination;
+    if (!name ||
+        !notes ||
+        !type ||
+        !address ||
+        !limit ||
+        !ownership ||
+        !vaccineDate
+    ) {
         return res.status(400).json({
             error: "All fields  are required",
         });
