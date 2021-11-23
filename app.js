@@ -50,6 +50,8 @@ app.use("/api", testRoutes);
 app.use("/api", centerRoutes);
 app.use("/api", notificationRoutes);
 
-app.listen(process.env.PORT || 3000, () => {
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
