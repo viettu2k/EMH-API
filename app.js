@@ -30,7 +30,7 @@ app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 
 // apiDocs
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
     fs.readFile("docs/apiDocs.json", (err, data) => {
         if (err) {
             res.status(400).json({
