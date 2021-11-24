@@ -133,7 +133,7 @@ exports.listByCenter = (req, res) => {
 
 exports.registerVaccination = (req, res) => {
     Vaccination.findByIdAndUpdate(
-        req.body.vaccinationId, { $push: { participants: req.body.userId } }, { new: true }
+        req.body.vaccinationId, { $push: { participants: req.body.name } }, { new: true }
     ).exec((err, result) => {
         if (err) {
             return res.status(400).json({
@@ -147,7 +147,7 @@ exports.registerVaccination = (req, res) => {
 
 exports.cancelRegister = (req, res) => {
     Vaccination.findByIdAndUpdate(
-        req.body.vaccinationId, { $pull: { participants: req.body.userId } }, { new: true }
+        req.body.vaccinationId, { $pull: { participants: req.body.name } }, { new: true }
     ).exec((err, result) => {
         if (err) {
             return res.status(400).json({
