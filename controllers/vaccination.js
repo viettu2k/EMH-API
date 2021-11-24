@@ -144,3 +144,17 @@ exports.registerVaccination = (req, res) => {
         }
     });
 };
+
+exports.cancelRegister = (req, res) => {
+    Vaccination.findByIdAndUpdate(
+        req.body.vaccinationId, { $pull: { participants: req.body.userId } }, { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};

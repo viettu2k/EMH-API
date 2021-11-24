@@ -11,6 +11,7 @@ const {
     createByUser,
     listByCenter,
     registerVaccination,
+    cancelRegister,
 } = require("../controllers/vaccination");
 const {
     requireSignin,
@@ -49,7 +50,8 @@ router.get(
     isMedicalStaff,
     createByUser
 );
-router.put("/vaccinations/like", requireSignin, registerVaccination);
+router.put("/vaccinations/register", requireSignin, registerVaccination);
+router.put("/vaccinations/cancelregister", requireSignin, cancelRegister);
 router.get("/vaccinations/center/:centerId", listByCenter);
 
 router.param("centerId", centerById);
