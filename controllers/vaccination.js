@@ -130,3 +130,17 @@ exports.listByCenter = (req, res) => {
             res.json(vaccinations);
         });
 };
+
+exports.registerVaccination = (req, res) => {
+    Vaccination.findByIdAndUpdate(
+        req.body.vaccinationId, { $push: { participants: req.body.userId } }, { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};
