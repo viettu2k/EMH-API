@@ -29,7 +29,7 @@ router.put(
     isAdmin,
     update
 );
-router.get("/centers", list);
+// router.get("/centers", list);
 router.get("/centers/photo/:centerId", photo);
 
 router.param("userId", userById);

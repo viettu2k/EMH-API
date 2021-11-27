@@ -164,6 +164,19 @@ exports.addMember = (req, res) => {
     });
 };
 
+exports.getCenters = (req, res) => {
+    User.find({ role: 2 })
+        .select("_id, name")
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    error: errorHandler(err),
+                });
+            }
+            res.json(data);
+        });
+};
+
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
     const { name, password, dob, address, phoneNumber } = req.body;
