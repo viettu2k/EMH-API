@@ -19,7 +19,7 @@ exports.read = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    const vaccine = new vaccine(req.body);
+    const vaccine = new Vaccine(req.body);
     const { name, type, quantity, timeConsuming } = vaccine;
     if (!name || !type || !quantity || !timeConsuming) {
         return res.status(400).json({
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
         });
     }
     vaccine.createdBy = req.profile;
-    Vaccine.save((err, data) => {
+    vaccine.save((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
@@ -77,8 +77,7 @@ exports.list = (req, res) => {
 };
 
 exports.createByCenter = (req, res) => {
-    vaccine
-        .find({ createdBy: req.profile._id })
+    Vaccine.find({ createdBy: req.profile._id })
         .populate("createdBy", "_id name")
         .sort("-createdAt")
         .exec((err, vaccines) => {
