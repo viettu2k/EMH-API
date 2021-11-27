@@ -72,7 +72,7 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isMedicalStaff = (req, res, next) => {
-    if (req.profile.role === 0) {
+    if (req.profile.role !== 1) {
         return res.status(403).json({
             error: "Medical staff resource! Access denied",
         });
@@ -81,7 +81,7 @@ exports.isMedicalStaff = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-    if (req.profile.role === 0 || req.profile.role === 1) {
+    if (req.profile.role !== 3) {
         return res.status(403).json({
             error: "Admin resource! Access denied",
         });

@@ -30,7 +30,7 @@ exports.createCenter = (req, res) => {
             });
         }
 
-        let center = new User(fields);
+        let user = new User(fields);
 
         if (files.photo) {
             if (files.photo.size > 1000000) {
@@ -38,13 +38,13 @@ exports.createCenter = (req, res) => {
                     error: "Image should be less than 1mb in size",
                 });
             }
-            center.photo.data = fs.readFileSync(files.photo.path);
-            center.photo.contentType = files.photo.type;
+            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.contentType = files.photo.type;
         }
 
-        center.role = 3;
+        user.role = 3;
 
-        center.save((err, result) => {
+        user.save((err, result) => {
             console.log(err);
             if (err) {
                 return res.status(400).json({ error: errorHandler(err) });
