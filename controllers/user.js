@@ -73,12 +73,11 @@ exports.createCenter = (req, res) => {
         user.role = 2;
 
         user.save((err, result) => {
-            console.log(err);
             if (err) {
                 return res.status(400).json({ error: errorHandler(err) });
             }
-            user.hashed_password = undefined;
-            user.salt = undefined;
+            result.hashed_password = undefined;
+            result.salt = undefined;
             result.photo = undefined;
             res.json(result);
         });
@@ -137,9 +136,9 @@ exports.createStaff = (req, res) => {
         }
 
         user.role = 1;
+        user.references = req.profile._id;
 
         user.save((err, result) => {
-            console.log(err);
             if (err) {
                 return res.status(400).json({ error: errorHandler(err) });
             }
@@ -152,7 +151,6 @@ exports.createStaff = (req, res) => {
 };
 
 exports.addMember = (req, res) => {
-    console.log(req.body);
     User.findByIdAndUpdate(req.profile._id, {
         $push: { members: req.body },
     }).exec((err, result) => {
