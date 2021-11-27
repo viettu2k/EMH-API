@@ -70,7 +70,7 @@ exports.createCenter = (req, res) => {
             user.photo.contentType = files.photo.type;
         }
 
-        user.role = 3;
+        user.role = 2;
 
         user.save((err, result) => {
             console.log(err);
