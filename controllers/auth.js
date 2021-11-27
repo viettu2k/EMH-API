@@ -83,6 +83,15 @@ exports.isMedicalStaff = (req, res, next) => {
     next();
 };
 
+exports.isMedicalCenter = (req, res, next) => {
+    if (req.profile.role !== 2) {
+        return res.status(403).json({
+            error: "Medical center resource! Access denied",
+        });
+    }
+    next();
+};
+
 exports.isAdmin = (req, res, next) => {
     if (req.profile.role !== 3) {
         return res.status(403).json({

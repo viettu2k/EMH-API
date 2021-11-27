@@ -52,7 +52,7 @@ exports.createCenter = (req, res) => {
             });
         }
 
-        if (/\d/.test(password)) {
+        if (!/\d/.test(password)) {
             return res.status(400).json({
                 error: "Password must contain a number",
             });
@@ -79,6 +79,7 @@ exports.createCenter = (req, res) => {
             }
             user.hashed_password = undefined;
             user.salt = undefined;
+            result.photo = undefined;
             res.json(result);
         });
     });
@@ -91,6 +92,81 @@ exports.userPhoto = (req, res, next) => {
     }
     next();
 };
+
+exports.createStaff = (req, res) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtension = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(400).json({
+                error: "Image could not be uploaded",
+            });
+        }
+        req.profile.photo = undefined;
+        console.log(req.profile);
+
+        // check for all fields
+        const { name, email, password, address, phoneNumber } = fields;
+        if (!name || !email || !password || !address || !phoneNumber) {
+            return res.status(400).json({
+                error: "All fields are required",
+            });
+        }
+
+        if (password.length >= 1 && password.length <= 5) {
+            return res.status(400).json({
+                error: "Password must be at least 6 characters",
+            });
+        }
+
+        if (!/\d/.test(password)) {
+            return res.status(400).json({
+                error: "Password must contain a number",
+            });
+        }
+
+        let user = new User(fields);
+
+        if (files.photo) {
+            if (files.photo.size > 1000000) {
+                return res.status(400).json({
+                    error: "Image should be less than 1mb in size",
+                });
+            }
+            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.contentType = files.photo.type;
+        }
+
+        user.role = 1;
+
+        user.save((err, result) => {
+            console.log(err);
+            if (err) {
+                return res.status(400).json({ error: errorHandler(err) });
+            }
+            result.hashed_password = undefined;
+            result.salt = undefined;
+            result.photo = undefined;
+            console.log(result);
+            const { _id, name } = result;
+            req.profile.members.push({ _id, name });
+            console.log(req.profile);
+            res.json(result);
+        });
+    });
+};
+
+// exports.addMember = (req, res, next) => {
+//     User.findByIdAndUpdate(
+//         req.body.userId, { $push: { members: req.body } },
+//         (err, result) => {
+//             if (err) {
+//                 return res.status(400).json({ err: err });
+//             }
+//             next();
+//         }
+//     );
+// };
 
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
