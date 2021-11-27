@@ -51,6 +51,7 @@ exports.createCenter = (req, res) => {
                 error: "Password must be at least 6 characters",
             });
         }
+
         if (/\d/.test(password)) {
             return res.status(400).json({
                 error: "Password must contain a number",
