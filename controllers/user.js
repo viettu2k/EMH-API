@@ -20,6 +20,48 @@ exports.read = (req, res) => {
     return res.json(req.profile);
 };
 
+exports.createCenter = (req, res) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtension = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(400).json({
+                error: "Image could not be uploaded",
+            });
+        }
+
+        let center = new User(fields);
+
+        if (files.photo) {
+            if (files.photo.size > 1000000) {
+                return res.status(400).json({
+                    error: "Image should be less than 1mb in size",
+                });
+            }
+            center.photo.data = fs.readFileSync(files.photo.path);
+            center.photo.contentType = files.photo.type;
+        }
+
+        center.role = 3;
+
+        center.save((err, result) => {
+            console.log(err);
+            if (err) {
+                return res.status(400).json({ error: errorHandler(err) });
+            }
+            res.json(result);
+        });
+    });
+};
+
+exports.userPhoto = (req, res, next) => {
+    if (req.profile.photo.data) {
+        res.set(("Content-Type", req.profile.photo.contentType));
+        return res.send(req.profile.photo.data);
+    }
+    next();
+};
+
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
     const { name, password, dob, address, phoneNumber } = req.body;
