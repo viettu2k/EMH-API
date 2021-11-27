@@ -14,6 +14,7 @@ const {
     update,
     createCenter,
     createStaff,
+    addMember,
     userPhoto,
 } = require("../controllers/user");
 
@@ -35,6 +36,8 @@ router.post(
     isMedicalCenter,
     createStaff
 );
+// add medical staff to members
+router.put("/staff/:userId", requireSignin, isAuth, isMedicalCenter, addMember);
 // get photo from DB
 router.get("/user/photo/:userId", userPhoto);
 router.param("userId", userById);

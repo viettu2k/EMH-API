@@ -147,26 +147,26 @@ exports.createStaff = (req, res) => {
             result.hashed_password = undefined;
             result.salt = undefined;
             result.photo = undefined;
-            console.log(result);
-            const { _id, name } = result;
-            req.profile.members.push({ _id, name });
-            console.log(req.profile);
             res.json(result);
         });
     });
 };
 
-// exports.addMember = (req, res, next) => {
-//     User.findByIdAndUpdate(
-//         req.body.userId, { $push: { members: req.body } },
-//         (err, result) => {
-//             if (err) {
-//                 return res.status(400).json({ err: err });
-//             }
-//             next();
-//         }
-//     );
-// };
+exports.addMember = (req, res) => {
+    User.findByIdAndUpdate(
+        req.profile._id, {
+            $push: { members: req.body },
+        }, { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};
 
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
