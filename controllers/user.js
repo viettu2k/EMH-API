@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const { errorHandler } = require("../helpers/dbErrorHandler");
+const formidable = require("formidable");
 const _ = require("lodash");
+const fs = require("fs");
 
 exports.userById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
@@ -27,6 +29,31 @@ exports.createCenter = (req, res) => {
         if (err) {
             return res.status(400).json({
                 error: "Image could not be uploaded",
+            });
+        }
+
+        // check for all fields
+        const { name, email, password, description, address, phoneNumber } = fields;
+        if (!name ||
+            !email ||
+            !password ||
+            !description ||
+            !address ||
+            !phoneNumber
+        ) {
+            return res.status(400).json({
+                error: "All fields are required",
+            });
+        }
+
+        if (password.length >= 1 && password.length <= 5) {
+            return res.status(400).json({
+                error: "Password must be at least 6 characters",
+            });
+        }
+        if (/\d/.test(password)) {
+            return res.status(400).json({
+                error: "Password must contain a number",
             });
         }
 
