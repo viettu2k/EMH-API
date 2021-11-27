@@ -103,7 +103,6 @@ exports.createStaff = (req, res) => {
             });
         }
         req.profile.photo = undefined;
-        console.log(req.profile);
 
         // check for all fields
         const { name, email, password, address, phoneNumber } = fields;
@@ -153,11 +152,10 @@ exports.createStaff = (req, res) => {
 };
 
 exports.addMember = (req, res) => {
-    User.findByIdAndUpdate(
-        req.profile._id, {
-            $push: { members: req.body },
-        }, { new: true }
-    ).exec((err, result) => {
+    console.log(req.body);
+    User.findByIdAndUpdate(req.profile._id, {
+        $push: { members: req.body },
+    }).exec((err, result) => {
         if (err) {
             return res.status(400).json({
                 error: err,

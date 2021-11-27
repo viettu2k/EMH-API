@@ -15,6 +15,7 @@ const {
     createCenter,
     createStaff,
     addMember,
+    getUser,
     userPhoto,
 } = require("../controllers/user");
 

@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
-    members: [{ type: ObjectId, ref: "User", default: [] }],
+    members: [{ name: String, id: { type: ObjectId, ref: "User" } }],
 }, { timestamps: true });
 
 // virtual field
