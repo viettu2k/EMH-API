@@ -24,10 +24,18 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
         trim: true,
+        default: "",
+    },
+    description: {
+        type: String,
+        trim: true,
+        maxlength: 2000,
+        default: "",
     },
     phoneNumber: {
         type: String,
         maxlength: 11,
+        default: "",
     },
     dob: {
         type: Date,
@@ -37,11 +45,19 @@ const userSchema = new mongoose.Schema({
         default: 0,
     },
     vaccinationHistory: [{ type: ObjectId, ref: "Vaccination", default: [] }],
-    testHistory: [{ type: ObjectId, ref: "Test", default: [] }],
     resetPasswordLink: {
         data: String,
         default: "",
     },
+    references: {
+        type: ObjectId,
+        ref: "User",
+    },
+    photo: {
+        data: Buffer,
+        contentType: String,
+    },
+    members: [{ type: ObjectId, ref: "User", default: [] }],
 }, { timestamps: true });
 
 // virtual field
