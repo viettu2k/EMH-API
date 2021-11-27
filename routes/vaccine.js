@@ -3,12 +3,12 @@ const router = express.Router();
 
 const {
     create,
-    notificationById,
+    vaccineById,
     read,
     remove,
     update,
     createByCenter,
-} = require("../controllers/notification");
+} = require("../controllers/vaccine");
 const {
     requireSignin,
     isAuth,
@@ -47,6 +47,6 @@ router.get(
 );
 
 router.param("userId", userById);
-router.param("notificationId", notificationById);
+router.param("vaccineId", vaccineById);
 
 module.exports = router;

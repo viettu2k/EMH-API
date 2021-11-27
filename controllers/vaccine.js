@@ -76,7 +76,7 @@ exports.list = (req, res) => {
         });
 };
 
-exports.createByUser = (req, res) => {
+exports.createByCenter = (req, res) => {
     vaccine
         .find({ createdBy: req.profile._id })
         .populate("createdBy", "_id name")
