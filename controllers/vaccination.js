@@ -20,21 +20,14 @@ exports.read = (req, res) => {
 
 exports.create = (req, res) => {
     const vaccination = new Vaccination(req.body);
-    const { name, notes, type, address, limit, ownership, vaccineDate } =
-    vaccination;
-    if (!name ||
-        !notes ||
-        !type ||
-        !address ||
-        !limit ||
-        !ownership ||
-        !vaccineDate
-    ) {
+    const { name, notes, vaccine, address, limit, vaccineDate } = vaccination;
+    if (!name || !notes || !vaccine || !address || !limit || !vaccineDate) {
         return res.status(400).json({
             error: "All fields  are required",
         });
     }
     vaccination.createdBy = req.profile;
+    vaccination.ownership = req.profile.references;
     vaccination.save((err, data) => {
         if (err) {
             return res.status(400).json({

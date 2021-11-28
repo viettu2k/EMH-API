@@ -28,8 +28,7 @@ router.post(
 router.put(
     "/vaccines/:vaccineId/:userId",
     requireSignin,
-    isAuth,
-    isMedicalCenter,
+    isMedicalStaff,
     update
 );
 router.delete(
@@ -42,7 +41,7 @@ router.delete(
 router.get(
     "/vaccines/by/:userId",
     requireSignin,
-    isMedicalCenter,
+    isMedicalStaff,
     createByCenter
 );
 

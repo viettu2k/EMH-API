@@ -75,7 +75,7 @@ exports.isAuth = (req, res, next) => {
 };
 
 exports.isMedicalStaff = (req, res, next) => {
-    if (req.profile.role !== 1) {
+    if (req.profile.role < 1) {
         return res.status(403).json({
             error: "Medical staff resource! Access denied",
         });

@@ -8,12 +8,7 @@ const vaccinationSchema = new mongoose.Schema({
         required: true,
         maxlength: 100,
     },
-    type: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 30,
-    },
+    vaccine: { type: ObjectId, ref: "Vaccine" },
     notes: {
         type: String,
         trim: true,
@@ -35,8 +30,8 @@ const vaccinationSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User",
     },
-    participants: [{ type: String, default: [] }],
-    ownership: { type: ObjectId, ref: "Center" },
+    participants: [{ name: String, id: { type: ObjectId, ref: "User" } }],
+    ownership: { type: ObjectId, ref: "User" },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Vaccination", vaccinationSchema);
