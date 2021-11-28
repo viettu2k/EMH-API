@@ -52,7 +52,7 @@ exports.update = (req, res) => {
 
 exports.remove = (req, res) => {
     const vaccine = req.vaccine;
-    Vaccine.remove((err, data) => {
+    vaccine.remove((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
