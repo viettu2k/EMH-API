@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
     let vaccine = req.vaccine;
     vaccine = _.extend(vaccine, req.body);
-    Vaccine.save((err, data) => {
+    vaccine.save((err, data) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
