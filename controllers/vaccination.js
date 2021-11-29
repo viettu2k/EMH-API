@@ -26,6 +26,11 @@ exports.create = (req, res) => {
             error: "All fields  are required",
         });
     }
+    if (limit < 0) {
+        return res.status(400).json({
+            error: "Limit cannot be negative",
+        });
+    }
     vaccination.createdBy = req.profile;
     vaccination.ownership = req.profile.references;
     vaccination.save((err, data) => {
