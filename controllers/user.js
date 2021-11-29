@@ -179,45 +179,37 @@ exports.getCenters = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-    const { name, password, dob, address, phoneNumber } = req.body;
-
-    User.findOne({ _id: req.profile._id }, (err, user) => {
-        if (err || !user) {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
             return res.status(400).json({
-                error: "User not found",
+                error: "Photo could not be uploaded",
             });
         }
-        if (!name) {
-            return res.status(400).json({
-                error: "Name is required",
-            });
-        } else {
-            user.name = name;
+        // save user
+        let user = req.profile;
+        // console.log("user in update: ", user);
+        user = _.extend(user, fields);
+
+        user.updated = Date.now();
+        // console.log("USER FORM DATA UPDATE: ", user);
+
+        if (files.photo) {
+            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.contentType = files.photo.type;
         }
 
-        if (password) {
-            if (password.length < 6) {
-                return res.status(400).json({
-                    error: "Password should be min 6 characters long",
-                });
-            } else {
-                user.password = password;
-            }
-        }
-        user.address = address;
-        user.dob = dob;
-        user.phoneNumber = phoneNumber;
-        user.save((err, updatedUser) => {
+        user.save((err, result) => {
             if (err) {
-                console.log("USER UPDATE ERROR", err);
                 return res.status(400).json({
-                    error: "User update failed",
+                    error: err,
                 });
             }
-            updatedUser.hashed_password = undefined;
-            updatedUser.salt = undefined;
-            res.json(updatedUser);
+            user.hashed_password = undefined;
+            user.salt = undefined;
+            // console.log("user after update with form data: ", user);
+            res.json(user);
         });
     });
 };

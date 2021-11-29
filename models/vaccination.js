@@ -32,6 +32,9 @@ const vaccinationSchema = new mongoose.Schema({
     },
     participants: [{
         name: String,
+        vaccineTime: {
+            type: Date,
+        },
         check: { type: Boolean, default: false },
         id: { type: ObjectId, ref: "User" },
     }, ],
