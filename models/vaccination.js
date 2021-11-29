@@ -30,7 +30,11 @@ const vaccinationSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User",
     },
-    participants: [{ name: String, id: { type: ObjectId, ref: "User" } }],
+    participants: [{
+        name: String,
+        check: { type: Boolean, default: false },
+        id: { type: ObjectId, ref: "User" },
+    }, ],
     ownership: { type: ObjectId, ref: "User" },
 }, { timestamps: true });
 
