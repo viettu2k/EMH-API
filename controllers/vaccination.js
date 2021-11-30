@@ -1,4 +1,5 @@
 const Vaccination = require("../models/vaccination");
+const User = require("../models/user");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
 const { sendEmail } = require("../helpers/sendEmail");
@@ -142,7 +143,7 @@ exports.sendVaccinationTime = (req, res) => {
         return res.status(400).json({ message: "No Email in request body" });
     }
     // console.log("forgot password finding user with that email");
-    const { email, name, vaccinationTime } = req.body;
+    const { email, vaccinationName, vaccinationTime } = req.body;
     // find the user based on email
     User.findOne({ email }, (err, user) => {
         // if err or no user
@@ -155,14 +156,14 @@ exports.sendVaccinationTime = (req, res) => {
         const emailData = {
             from: "noreply@node-react.com",
             to: email,
-            subject: name,
+            subject: vaccinationName,
             text: `You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}`,
             html: `<p>You have successfully registered for vaccination! Your vaccine time is: </p> <p>${vaccinationTime}</p>`,
         };
 
         sendEmail(emailData);
         return res.status(200).json({
-            message: `Email has been sent to ${email}. Follow the instructions to reset your password.`,
+            message: `You can check your vaccine time in your email.`,
         });
     });
 };
