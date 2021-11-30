@@ -1,6 +1,7 @@
 const Vaccination = require("../models/vaccination");
 const { errorHandler } = require("../helpers/dbErrorHandler");
 const _ = require("lodash");
+const { sendEmail } = require("../helpers/sendEmail");
 
 exports.vaccinationById = (req, res, next, id) => {
     Vaccination.findById(id).exec((err, vaccination) => {
@@ -132,5 +133,36 @@ exports.cancelRegister = (req, res) => {
         } else {
             res.json(result);
         }
+    });
+};
+
+exports.sendVaccinationTime = (req, res) => {
+    if (!req.body) return res.status(400).json({ message: "No request body" });
+    if (!req.body.email) {
+        return res.status(400).json({ message: "No Email in request body" });
+    }
+    // console.log("forgot password finding user with that email");
+    const { email, name, vaccinationTime } = req.body;
+    // find the user based on email
+    User.findOne({ email }, (err, user) => {
+        // if err or no user
+        if (err || !user)
+            return res.status("401").json({
+                error: "User with that email does not exist!",
+            });
+
+        // email data
+        const emailData = {
+            from: "noreply@node-react.com",
+            to: email,
+            subject: name,
+            text: `You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}`,
+            html: `<p>You have successfully registered for vaccination! Your vaccine time is: </p> <p>${vaccinationTime}</p>`,
+        };
+
+        sendEmail(emailData);
+        return res.status(200).json({
+            message: `Email has been sent to ${email}. Follow the instructions to reset your password.`,
+        });
     });
 };
