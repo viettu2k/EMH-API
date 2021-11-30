@@ -178,8 +178,9 @@ exports.getCenters = (req, res) => {
         });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
     let form = new formidable.IncomingForm();
+    // console.log("incoming form data: ", form);
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
         if (err) {
@@ -192,7 +193,6 @@ exports.update = (req, res) => {
         // console.log("user in update: ", user);
         user = _.extend(user, fields);
 
-        user.updated = Date.now();
         // console.log("USER FORM DATA UPDATE: ", user);
 
         if (files.photo) {
