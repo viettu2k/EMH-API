@@ -191,6 +191,7 @@ exports.update = (req, res, next) => {
         // save user
         let user = req.profile;
         // console.log("user in update: ", user);
+        console.log(fields);
         user = _.extend(user, fields);
 
         // console.log("USER FORM DATA UPDATE: ", user);
@@ -206,10 +207,10 @@ exports.update = (req, res, next) => {
                     error: err,
                 });
             }
-            user.hashed_password = undefined;
-            user.salt = undefined;
+            result.hashed_password = undefined;
+            result.salt = undefined;
             // console.log("user after update with form data: ", user);
-            res.json(user);
+            res.json(result);
         });
     });
 };
