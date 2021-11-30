@@ -35,7 +35,7 @@ const vaccinationSchema = new mongoose.Schema({
         vaccineTime: {
             type: Date,
         },
-        check: { type: Boolean, default: false },
+        status: { type: Boolean, default: false },
         id: { type: ObjectId, ref: "User" },
     }, ],
     ownership: { type: ObjectId, ref: "User" },

@@ -68,30 +68,6 @@ exports.remove = (req, res) => {
     });
 };
 
-/* default query */
-/* api/vaccinations?sortBy=createdAt&order=desc&limit=5 */
-
-// exports.list = (req, res) => {
-//     let order = req.query.order ? req.query.order : "desc";
-//     let sortBy = req.query.sortBy ? req.query.sortBy : "createdAt";
-//     let limit = req.query.limit ? parseInt(req.query.limit) : 5;
-
-//     Vaccination.find()
-//         .populate("owner")
-//         .sort([
-//             [sortBy, order]
-//         ])
-//         .limit(limit)
-//         .exec((err, vaccinations) => {
-//             if (err) {
-//                 return res.status(400).json({
-//                     error: "Vaccinations not found",
-//                 });
-//             }
-//             res.send(vaccinations);
-//         });
-// };
-
 exports.list = (req, res) => {
     Vaccination.find()
         .sort("-createdAt")
@@ -130,8 +106,9 @@ exports.listByCenter = (req, res) => {
 };
 
 exports.registerVaccination = (req, res) => {
+    const { vaccinationId, name, id } = req.body;
     Vaccination.findByIdAndUpdate(
-        req.body.vaccinationId, { $push: { participants: req.body.name } }, { new: true }
+        vaccinationId, { $push: { participants: { name, id } } }, { new: true }
     ).exec((err, result) => {
         if (err) {
             return res.status(400).json({
@@ -144,8 +121,9 @@ exports.registerVaccination = (req, res) => {
 };
 
 exports.cancelRegister = (req, res) => {
+    const { vaccinationId, name, id } = req.body;
     Vaccination.findByIdAndUpdate(
-        req.body.vaccinationId, { $pull: { participants: req.body.name } }, { new: true }
+        vaccinationId, { $pull: { participants: { name, id } } }, { new: true }
     ).exec((err, result) => {
         if (err) {
             return res.status(400).json({
