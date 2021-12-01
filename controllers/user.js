@@ -5,15 +5,19 @@ const _ = require("lodash");
 const fs = require("fs");
 
 exports.userById = (req, res, next, id) => {
-    User.findById(id).exec((err, user) => {
-        if (err || !user) {
-            return res.status(400).json({ error: "User not found" });
-        }
-        req.profile = user;
-        req.profile.hashed_password = undefined;
-        req.profile.salt = undefined;
+    if (id === "add-to-history" || id === "remove-from-history") {
         next();
-    });
+    } else {
+        User.findById(id).exec((err, user) => {
+            if (err || !user) {
+                return res.status(400).json({ error: "User not found" });
+            }
+            req.profile = user;
+            req.profile.hashed_password = undefined;
+            req.profile.salt = undefined;
+            next();
+        });
+    }
 };
 
 exports.read = (req, res) => {
@@ -212,5 +216,44 @@ exports.update = (req, res, next) => {
             // console.log("user after update with form data: ", user);
             res.json(result);
         });
+    });
+};
+
+exports.addToHistory = (req, res) => {
+    console.log(req.body);
+    const { _id, vaccinationName, vaccinationId, vaccinationTime } = req.body;
+    User.findByIdAndUpdate(
+        _id, {
+            $push: {
+                histories: { vaccinationName, vaccinationId, vaccinationTime },
+            },
+        }, { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        } else {
+            res.json(result);
+        }
+    });
+};
+
+exports.removeFromHistory = (req, res) => {
+    const { _id, vaccinationName, vaccinationId, vaccinationTime } = req.body;
+    User.findByIdAndUpdate(
+        _id, {
+            $pull: {
+                histories: { vaccinationName, vaccinationId, vaccinationTime },
+            },
+        }, { new: true }
+    ).exec((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        } else {
+            res.json(result);
+        }
     });
 };

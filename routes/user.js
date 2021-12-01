@@ -17,7 +17,12 @@ const {
     addMember,
     getCenters,
     userPhoto,
+    addToHistory,
+    removeFromHistory,
 } = require("../controllers/user");
+
+router.put("/user/add-to-history", requireSignin, addToHistory);
+router.put("/user/remove-from-history", requireSignin, removeFromHistory);
 
 router.get("/secret/:userId", requireSignin, isAuth, isAdmin, (req, res) => {
     res.json({
@@ -44,6 +49,7 @@ router.put("/staff/:userId", requireSignin, isAuth, isMedicalCenter, addMember);
 router.get("/centers", getCenters);
 // get photo from DB
 router.get("/user/photo/:userId", userPhoto);
+
 router.param("userId", userById);
 
 module.exports = router;
