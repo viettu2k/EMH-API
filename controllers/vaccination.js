@@ -96,7 +96,7 @@ exports.createByUser = (req, res) => {
 };
 
 exports.listByCenter = (req, res) => {
-    Vaccination.find({ ownership: req.center._id })
+    Vaccination.find({ ownership: req.profile._id })
         .populate("ownership", "_id name")
         .sort("-createdAt")
         .exec((err, vaccinations) => {

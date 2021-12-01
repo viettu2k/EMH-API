@@ -53,7 +53,7 @@ router.get(
 );
 router.put("/vaccinations/register", requireSignin, registerVaccination);
 router.put("/vaccinations/cancel-register", requireSignin, cancelRegister);
-router.get("/vaccinations/center/:centerId", listByCenter);
+router.get("/vaccinations/center/:userId", listByCenter);
 router.post("/send-vaccination-time", sendVaccinationTime);
 router.param("centerId", centerById);
 router.param("userId", userById);
