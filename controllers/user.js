@@ -220,7 +220,6 @@ exports.update = (req, res, next) => {
 };
 
 exports.addToHistory = (req, res) => {
-    console.log(req.body);
     const { _id, vaccinationName, vaccinationId, vaccinationTime } = req.body;
     User.findByIdAndUpdate(
         _id, {
