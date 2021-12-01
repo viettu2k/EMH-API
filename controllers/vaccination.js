@@ -142,8 +142,7 @@ exports.sendVaccinationTime = (req, res) => {
     if (!req.body.email) {
         return res.status(400).json({ message: "No Email in request body" });
     }
-    // console.log("forgot password finding user with that email");
-    const { email, vaccinationName, vaccinationTime } = req.body;
+    const { email, vaccinationName, vaccinationTime, name, address } = req.body;
     // find the user based on email
     User.findOne({ email }, (err, user) => {
         // if err or no user
@@ -157,8 +156,8 @@ exports.sendVaccinationTime = (req, res) => {
             from: "noreply@node-react.com",
             to: email,
             subject: vaccinationName,
-            text: `You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}`,
-            html: `<p>You have successfully registered for vaccination! Your vaccine time is: </p> <p>${vaccinationTime}</p>`,
+            text: `Hi ${name}! \n You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}`,
+            html: `<p>Hi ${name}</p> <p>You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}</p>`,
         };
 
         sendEmail(emailData);
