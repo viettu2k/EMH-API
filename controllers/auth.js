@@ -12,7 +12,7 @@ exports.signup = (req, res) => {
     user.save((err, user) => {
         if (err) {
             return res.status(400).json({
-                err: errorHandler(err),
+                error: errorHandler(err),
             });
         }
         user.hashed_password = undefined;
