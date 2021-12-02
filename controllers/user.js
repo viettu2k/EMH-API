@@ -289,7 +289,13 @@ exports.addToHistory = (req, res) => {
     User.findByIdAndUpdate(
         _id, {
             $push: {
-                histories: { vaccinationName, vaccine, vaccinationId, vaccinationTime },
+                histories: {
+                    vaccinationName,
+                    vaccine,
+                    timeConsuming,
+                    vaccinationId,
+                    vaccinationTime,
+                },
             },
         }, { new: true }
     ).exec((err, result) => {
@@ -318,6 +324,7 @@ exports.removeFromHistory = (req, res) => {
                 histories: {
                     vaccinationName,
                     vaccine,
+                    timeConsuming,
                     vaccinationId,
                     vaccinationTime,
                 },
