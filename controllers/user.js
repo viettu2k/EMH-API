@@ -278,21 +278,14 @@ exports.update = (req, res, next) => {
 };
 
 exports.addToHistory = (req, res) => {
-    const {
-        _id,
-        vaccinationName,
-        vaccine,
-        timeConsuming,
-        vaccinationId,
-        vaccinationTime,
-    } = req.body;
+    const { _id, vaccinationName, vaccineName, vaccinationId, vaccinationTime } =
+    req.body;
     User.findByIdAndUpdate(
         _id, {
             $push: {
                 histories: {
                     vaccinationName,
-                    vaccine,
-                    timeConsuming,
+                    vaccineName,
                     vaccinationId,
                     vaccinationTime,
                 },
@@ -310,21 +303,14 @@ exports.addToHistory = (req, res) => {
 };
 
 exports.removeFromHistory = (req, res) => {
-    const {
-        _id,
-        vaccinationName,
-        vaccine,
-        timeConsuming,
-        vaccinationId,
-        vaccinationTime,
-    } = req.body;
+    const { _id, vaccinationName, vaccineName, vaccinationId, vaccinationTime } =
+    req.body;
     User.findByIdAndUpdate(
         _id, {
             $pull: {
                 histories: {
                     vaccinationName,
-                    vaccine,
-                    timeConsuming,
+                    vaccineName,
                     vaccinationId,
                     vaccinationTime,
                 },

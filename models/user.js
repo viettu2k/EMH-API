@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     },
     histories: [{
         vaccinationName: String,
-        vaccine: String,
+        vaccineName: String,
         timeConsuming: Number,
         status: { type: Boolean, default: false },
         vaccinationId: { type: ObjectId, ref: "User" },
