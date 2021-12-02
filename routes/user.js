@@ -14,6 +14,7 @@ const {
     update,
     createCenter,
     createStaff,
+    createFamilyMember,
     addMember,
     getCenters,
     userPhoto,
@@ -42,8 +43,15 @@ router.post(
     isMedicalCenter,
     createStaff
 );
-// add medical staff to members
-router.put("/staff/:userId", requireSignin, isAuth, isMedicalCenter, addMember);
+// add family member
+router.post(
+    "/family-member/:userId",
+    requireSignin,
+    isAuth,
+    createFamilyMember
+);
+// add member
+router.put("/add-member/:userId", requireSignin, isAuth, addMember);
 
 // add medical staff to members
 router.get("/centers", getCenters);

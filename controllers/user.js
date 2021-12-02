@@ -155,6 +155,64 @@ exports.createStaff = (req, res) => {
     });
 };
 
+exports.createFamilyMember = (req, res) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtension = true;
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            return res.status(400).json({
+                error: "Image could not be uploaded",
+            });
+        }
+        req.profile.photo = undefined;
+
+        // check for all fields
+        const { name, email, password, address, phoneNumber } = fields;
+        if (!name || !email || !password || !address || !phoneNumber) {
+            return res.status(400).json({
+                error: "All fields are required",
+            });
+        }
+
+        if (password.length >= 1 && password.length <= 5) {
+            return res.status(400).json({
+                error: "Password must be at least 6 characters",
+            });
+        }
+
+        if (!/\d/.test(password)) {
+            return res.status(400).json({
+                error: "Password must contain a number",
+            });
+        }
+
+        let user = new User(fields);
+
+        if (files.photo) {
+            if (files.photo.size > 1000000) {
+                return res.status(400).json({
+                    error: "Image should be less than 1mb in size",
+                });
+            }
+            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.contentType = files.photo.type;
+        }
+
+        user.role = 0;
+        user.references = req.profile._id;
+
+        user.save((err, result) => {
+            if (err) {
+                return res.status(400).json({ error: errorHandler(err) });
+            }
+            result.hashed_password = undefined;
+            result.salt = undefined;
+            result.photo = undefined;
+            res.json(result);
+        });
+    });
+};
+
 exports.addMember = (req, res) => {
     User.findByIdAndUpdate(req.profile._id, {
         $push: { members: req.body },
