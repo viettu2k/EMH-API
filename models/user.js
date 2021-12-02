@@ -45,9 +45,15 @@ const userSchema = new mongoose.Schema({
     },
     histories: [{
         vaccinationName: String,
+        vaccine: String,
+        timeConsuming: Number,
         status: { type: Boolean, default: false },
         vaccinationId: { type: ObjectId, ref: "User" },
         vaccinationTime: { type: Date },
+        created: {
+            type: Date,
+            default: Date.now,
+        },
     }, ],
     resetPasswordLink: {
         data: String,
