@@ -8,7 +8,11 @@ const vaccinationSchema = new mongoose.Schema({
         required: true,
         maxlength: 100,
     },
-    vaccine: { name: String, id: { type: ObjectId, ref: "Vaccine" } },
+    vaccine: {
+        name: String,
+        timeConsuming: Number,
+        id: { type: ObjectId, ref: "Vaccine" },
+    },
     notes: {
         type: String,
         trim: true,
