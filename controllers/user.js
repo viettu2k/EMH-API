@@ -253,7 +253,6 @@ exports.update = (req, res, next) => {
         // save user
         let user = req.profile;
         // console.log("user in update: ", user);
-        console.log(fields);
         user = _.extend(user, fields);
 
         // console.log("USER FORM DATA UPDATE: ", user);

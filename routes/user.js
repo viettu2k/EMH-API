@@ -34,7 +34,7 @@ router.get("/secret/:userId", requireSignin, isAuth, isAdmin, (req, res) => {
 });
 
 router.get("/user/:userId", read);
-router.put("/user/:userId", requireSignin, isAuth, update);
+router.put("/user/:userId", requireSignin, update);
 // add medical center
 router.post("/center/:userId", requireSignin, isAuth, isAdmin, createCenter);
 // add medical staff
