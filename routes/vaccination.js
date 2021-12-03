@@ -13,6 +13,7 @@ const {
     registerVaccination,
     cancelRegister,
     sendVaccinationTime,
+    listParticipantsByCenter,
 } = require("../controllers/vaccination");
 const {
     requireSignin,
@@ -54,6 +55,10 @@ router.get(
 router.put("/vaccinations/register", requireSignin, registerVaccination);
 router.put("/vaccinations/cancel-register", requireSignin, cancelRegister);
 router.get("/vaccinations/center/:userId", listByCenter);
+router.get(
+    "/vaccinations/center/participants/:userId",
+    listParticipantsByCenter
+);
 router.post("/send-vaccination-time", sendVaccinationTime);
 router.param("centerId", centerById);
 router.param("userId", userById);

@@ -97,7 +97,7 @@ exports.createByUser = (req, res) => {
 
 exports.listByCenter = (req, res) => {
     Vaccination.find({ ownership: req.profile._id })
-        .populate("ownership", "_id name")
+        .populate("ownership", "_id")
         .sort("-createdAt")
         .exec((err, vaccinations) => {
             if (err) {
@@ -165,4 +165,17 @@ exports.sendVaccinationTime = (req, res) => {
             message: `You can check your vaccine time in your email.`,
         });
     });
+};
+
+exports.listParticipantsByCenter = (req, res) => {
+    Vaccination.find({ ownership: req.profile._id })
+        .populate("ownership", "_id")
+        .select("participants")
+        .sort("createdAt")
+        .exec((err, vaccinations) => {
+            if (err) {
+                return res.status(400).json({ error: err });
+            }
+            res.json(vaccinations);
+        });
 };
