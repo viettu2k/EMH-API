@@ -310,8 +310,14 @@ exports.addToHistory = (req, res) => {
 };
 
 exports.removeFromHistory = (req, res) => {
-    const { _id, vaccinationName, vaccineName, vaccinationId, vaccinationTime, timeConsuming } =
-    req.body;
+    const {
+        _id,
+        vaccinationName,
+        vaccineName,
+        vaccinationId,
+        vaccinationTime,
+        timeConsuming,
+    } = req.body;
     User.findByIdAndUpdate(
         _id, {
             $pull: {
@@ -332,5 +338,26 @@ exports.removeFromHistory = (req, res) => {
         } else {
             res.json(result);
         }
+    });
+};
+
+exports.getListUser = (req, res) => {
+    User.find((err, users) => {
+        if (err) {
+            return res.status(400).json({ error: err });
+        }
+        res.json(users);
+    }).select("_id name email address phoneNumber dob role");
+};
+
+exports.deleteUser = (req, res, next) => {
+    let user = req.profile;
+    user.remove((err, user) => {
+        if (err) {
+            return res.status(400).json({ err: err });
+        }
+        user.hashed_password = undefined;
+        user.salt = undefined;
+        res.json({ message: "User deleted successfully!" });
     });
 };

@@ -20,6 +20,8 @@ const {
     userPhoto,
     addToHistory,
     removeFromHistory,
+    getListUser,
+    deleteUser,
 } = require("../controllers/user");
 
 router.put("/user/add-to-history", requireSignin, addToHistory);
@@ -57,6 +59,8 @@ router.put("/add-member/:userId", requireSignin, isAuth, addMember);
 router.get("/centers", getCenters);
 // get photo from DB
 router.get("/user/photo/:userId", userPhoto);
+router.delete("/user/:userId", requireSignin, deleteUser);
+router.get("/users", getListUser);
 
 router.param("userId", userById);
 
