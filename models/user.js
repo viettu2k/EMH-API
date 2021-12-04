@@ -23,18 +23,15 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
         trim: true,
-        default: "",
     },
     description: {
         type: String,
         trim: true,
         maxlength: 2000,
-        default: "",
     },
     phoneNumber: {
         type: String,
         maxlength: 11,
-        default: "",
     },
     dob: {
         type: Date,
@@ -57,7 +54,6 @@ const userSchema = new mongoose.Schema({
     }, ],
     resetPasswordLink: {
         data: String,
-        default: "",
     },
     references: {
         type: ObjectId,
