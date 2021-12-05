@@ -23,7 +23,6 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const vaccinationRoutes = require("./routes/vaccination");
 const vaccineRoutes = require("./routes/vaccine");
-const chapAppRoutes = require("./routes/chat");
 
 // app
 const app = express();
@@ -58,7 +57,6 @@ app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", vaccinationRoutes);
 app.use("/api", vaccineRoutes);
-app.use("/api", chapAppRoutes);
 
 // IO handler
 io.on("connect", (socket) => {
