@@ -10,13 +10,6 @@ const fs = require("fs");
 const socketio = require("socket.io");
 require("dotenv").config();
 
-// import routes
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
-const vaccinationRoutes = require("./routes/vaccination");
-const vaccineRoutes = require("./routes/vaccine");
-const chapAppRoutes = require("./routes/chat");
-
 // import users handler
 const {
     addUser,
@@ -24,6 +17,13 @@ const {
     getUser,
     getUsersInRoom,
 } = require("./helpers/usersHandler");
+
+// import routes
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
+const vaccinationRoutes = require("./routes/vaccination");
+const vaccineRoutes = require("./routes/vaccine");
+const chapAppRoutes = require("./routes/chat");
 
 // app
 const app = express();
@@ -111,6 +111,6 @@ io.on("connect", (socket) => {
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
