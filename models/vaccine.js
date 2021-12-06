@@ -6,18 +6,22 @@ const vaccineSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
+        unique: true,
         maxlength: 200,
     },
     type: {
         type: String,
         maxlength: 2000,
         trim: true,
+        required: true,
     },
     quantity: {
         type: Number,
+        required: true,
     },
     timeConsuming: {
         type: Number,
+        required: true,
     },
     consumed: {
         type: Number,
