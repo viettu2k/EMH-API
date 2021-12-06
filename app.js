@@ -61,7 +61,12 @@ app.use("/api", vaccineRoutes);
 // IO handler
 io.on("connect", (socket) => {
     socket.on("join", ({ name, room, userId }, callback) => {
-        const { error, user } = addUser({ id: socket.id, name, room, userId });
+        const { error, user } = addUser({
+            id: socket.id,
+            name,
+            room,
+            userId,
+        });
 
         if (error) return callback(error);
 
@@ -96,6 +101,7 @@ io.on("connect", (socket) => {
         const user = removeUser(socket.id);
 
         if (user) {
+            console.log(user);
             io.to(user.room).emit("message", {
                 user: "EMH System",
                 text: `${user.name} has left.`,
