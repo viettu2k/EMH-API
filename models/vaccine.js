@@ -11,7 +11,6 @@ const vaccineSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        maxlength: 2000,
         trim: true,
         required: true,
     },

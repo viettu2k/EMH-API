@@ -16,7 +16,6 @@ const vaccinationSchema = new mongoose.Schema({
     notes: {
         type: String,
         trim: true,
-        required: true,
         maxlength: 2000,
     },
     address: {
