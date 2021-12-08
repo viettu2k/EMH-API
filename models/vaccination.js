@@ -21,9 +21,11 @@ const vaccinationSchema = new mongoose.Schema({
     address: {
         type: String,
         trim: true,
+        required: true,
     },
     limit: {
         type: Number,
+        required: true,
     },
     vaccineDate: {
         type: Date,
