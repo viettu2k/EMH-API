@@ -13,8 +13,6 @@ exports.userById = (req, res, next, id) => {
                 return res.status(400).json({ error: "User not found" });
             }
             req.profile = user;
-            req.profile.hashed_password = undefined;
-            req.profile.salt = undefined;
             next();
         });
     }
@@ -252,7 +250,6 @@ exports.update = (req, res, next) => {
         }
         // save user
         let user = req.profile;
-        // console.log("user in update: ", user);
         user = _.extend(user, fields);
 
         // console.log("USER FORM DATA UPDATE: ", user);
@@ -270,7 +267,7 @@ exports.update = (req, res, next) => {
             }
             result.hashed_password = undefined;
             result.salt = undefined;
-            // console.log("user after update with form data: ", user);
+            result.photo = undefined;
             res.json(result);
         });
     });

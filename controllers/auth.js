@@ -9,14 +9,14 @@ dotenv.config();
 
 exports.signup = (req, res) => {
     const user = new User(req.body);
-    user.save((err, user) => {
+    user.save((err, result) => {
         if (err) {
             return res.status(400).json({
                 error: errorHandler(err),
             });
         }
-        user.hashed_password = undefined;
-        user.salt = undefined;
+        result.hashed_password = undefined;
+        result.salt = undefined;
         res.json({
             user,
         });
