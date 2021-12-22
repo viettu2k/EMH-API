@@ -238,7 +238,7 @@ exports.getCenters = (req, res) => {
         });
 };
 
-exports.update = (req, res, next) => {
+exports.update = (req, res) => {
     let form = new formidable.IncomingForm();
     // console.log("incoming form data: ", form);
     form.keepExtensions = true;
