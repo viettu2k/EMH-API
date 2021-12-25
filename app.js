@@ -101,7 +101,6 @@ io.on("connect", (socket) => {
         const user = removeUser(socket.id);
 
         if (user) {
-            console.log(user);
             io.to(user.room).emit("message", {
                 user: "EMH System",
                 text: `${user.name} has left.`,
