@@ -273,6 +273,22 @@ exports.update = (req, res) => {
     });
 };
 
+exports.updateHistory = (req, res) => {
+    let user = req.profile;
+    user = _.extend(user, req.body);
+    user.save((err, result) => {
+        if (err) {
+            return res.status(400).json({
+                error: err,
+            });
+        }
+        result.hashed_password = undefined;
+        result.salt = undefined;
+        result.photo = undefined;
+        res.json(result);
+    });
+};
+
 exports.addToHistory = (req, res) => {
     const {
         _id,

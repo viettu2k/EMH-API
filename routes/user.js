@@ -22,6 +22,7 @@ const {
     removeFromHistory,
     getListUser,
     deleteUser,
+    updateHistory,
 } = require("../controllers/user");
 
 router.put("/user/add-to-history", requireSignin, addToHistory);
@@ -35,6 +36,7 @@ router.get("/secret/:userId", requireSignin, isAuth, isAdmin, (req, res) => {
 
 router.get("/user/:userId", read);
 router.put("/user/:userId", requireSignin, update);
+router.put("/user/history/:userId", requireSignin, updateHistory);
 // add medical center
 router.post("/center/:userId", requireSignin, isAuth, isAdmin, createCenter);
 // add medical staff
