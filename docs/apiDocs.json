@@ -13,9 +13,5 @@
     "/api/vaccinations": "get all vaccinations",
     "/api/vaccinations/:vaccinationId": "get vaccination by id",
     "/api/vaccinations/:userId": "create a new vaccination by user",
-    "/api/vaccinations/:centerId/:userId": "update/delete vaccination by user",
-    "/api/testes": "get all testes",
-    "/api/testes/:vaccinationId": "get test by id",
-    "/api/testes/:userId": "create a new test by user",
-    "/api/testes/:centerId/:userId": "update/delete test by user"
+    "/api/vaccinations/:centerId/:userId": "update/delete vaccination by user"
 }
