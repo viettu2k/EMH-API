@@ -5,176 +5,180 @@ const _ = require("lodash");
 const { sendEmail } = require("../helpers/sendEmail");
 
 exports.vaccinationById = (req, res, next, id) => {
-    Vaccination.findById(id).exec((err, vaccination) => {
-        if (err || !vaccination) {
-            return res.status(400).json({
-                error: "Vaccination not found",
-            });
-        }
-        req.vaccination = vaccination;
-        next();
-    });
+  Vaccination.findById(id).exec((err, vaccination) => {
+    if (err || !vaccination) {
+      return res.status(400).json({
+        error: "Vaccination not found",
+      });
+    }
+    req.vaccination = vaccination;
+    next();
+  });
 };
 
 exports.read = (req, res) => {
-    return res.json(req.vaccination);
+  return res.json(req.vaccination);
 };
 
 exports.create = (req, res) => {
-    const vaccination = new Vaccination(req.body);
-    const { name, notes, vaccine, address, limit, vaccineDate } = vaccination;
-    if (!name || !notes || !vaccine || !address || !limit || !vaccineDate) {
-        return res.status(400).json({
-            error: "All fields  are required",
-        });
-    }
-    if (limit < 0) {
-        return res.status(400).json({
-            error: "Limit cannot be negative",
-        });
-    }
-    vaccination.createdBy = req.profile;
-    vaccination.ownership = req.profile.references;
-    vaccination.save((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err),
-            });
-        }
-        res.json(data);
+  const vaccination = new Vaccination(req.body);
+  const { name, notes, vaccine, address, limit, vaccineDate } = vaccination;
+  if (!name || !notes || !vaccine || !address || !limit || !vaccineDate) {
+    return res.status(400).json({
+      error: "All fields  are required",
     });
+  }
+  if (limit < 0) {
+    return res.status(400).json({
+      error: "Limit cannot be negative",
+    });
+  }
+  vaccination.createdBy = req.profile;
+  vaccination.ownership = req.profile.references;
+  vaccination.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
 };
 
 exports.update = (req, res) => {
-    let vaccination = req.vaccination;
-    vaccination = _.extend(vaccination, req.body);
-    vaccination.save((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err),
-            });
-        }
-        res.json(data);
-    });
+  let vaccination = req.vaccination;
+  vaccination = _.extend(vaccination, req.body);
+  vaccination.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
 };
 
 exports.remove = (req, res) => {
-    const vaccination = req.vaccination;
-    vaccination.remove((err, data) => {
-        if (err) {
-            return res.status(400).json({
-                error: errorHandler(err),
-            });
-        }
-        res.json({ message: "Vaccination deleted successfully" });
-    });
+  const vaccination = req.vaccination;
+  vaccination.remove((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({ message: "Vaccination deleted successfully" });
+  });
 };
 
 exports.list = (req, res) => {
-    Vaccination.find()
-        .sort("-createdAt")
-        .exec((err, data) => {
-            if (err) {
-                return res.status(400).json({
-                    error: errorHandler(err),
-                });
-            }
-            res.json(data);
+  Vaccination.find()
+    .sort("-createdAt")
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
         });
+      }
+      res.json(data);
+    });
 };
 
 exports.createByUser = (req, res) => {
-    Vaccination.find({ createdBy: req.profile._id })
-        .populate("createdBy", "_id name")
-        .sort("-createdAt")
-        .exec((err, vaccinations) => {
-            if (err) {
-                return res.status(400).json({ error: err });
-            }
-            res.json(vaccinations);
-        });
+  Vaccination.find({ createdBy: req.profile._id })
+    .populate("createdBy", "_id name")
+    .sort("-createdAt")
+    .exec((err, vaccinations) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json(vaccinations);
+    });
 };
 
 exports.listByCenter = (req, res) => {
-    Vaccination.find({ ownership: req.profile._id })
-        .populate("ownership", "_id")
-        .sort("-createdAt")
-        .exec((err, vaccinations) => {
-            if (err) {
-                return res.status(400).json({ error: err });
-            }
-            res.json(vaccinations);
-        });
+  Vaccination.find({ ownership: req.profile._id })
+    .populate("ownership", "_id")
+    .sort("-createdAt")
+    .exec((err, vaccinations) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json(vaccinations);
+    });
 };
 
 exports.registerVaccination = (req, res) => {
-    const { vaccinationId, name, id, vaccineName } = req.body;
-    Vaccination.findByIdAndUpdate(
-        vaccinationId, { $push: { participants: { name, id, vaccineName } } }, { new: true }
-    ).exec((err, result) => {
-        if (err) {
-            return res.status(400).json({
-                error: err,
-            });
-        } else {
-            res.json(result);
-        }
-    });
+  const { vaccinationId, name, id, vaccineName } = req.body;
+  Vaccination.findByIdAndUpdate(
+    vaccinationId,
+    { $push: { participants: { name, id, vaccineName } } },
+    { new: true }
+  ).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    } else {
+      res.json(result);
+    }
+  });
 };
 
 exports.cancelRegister = (req, res) => {
-    const { vaccinationId, name, id, vaccineName } = req.body;
-    Vaccination.findByIdAndUpdate(
-        vaccinationId, { $pull: { participants: { name, id, vaccineName } } }, { new: true }
-    ).exec((err, result) => {
-        if (err) {
-            return res.status(400).json({
-                error: err,
-            });
-        } else {
-            res.json(result);
-        }
-    });
+  const { vaccinationId, name, id, vaccineName } = req.body;
+  Vaccination.findByIdAndUpdate(
+    vaccinationId,
+    { $pull: { participants: { name, id, vaccineName } } },
+    { new: true }
+  ).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    } else {
+      res.json(result);
+    }
+  });
 };
 
 exports.sendVaccinationTime = (req, res) => {
-    if (!req.body) return res.status(400).json({ message: "No request body" });
-    if (!req.body.email) {
-        return res.status(400).json({ message: "No Email in request body" });
-    }
-    const { email, vaccinationName, vaccinationTime, name, address } = req.body;
-    // find the user based on email
-    User.findOne({ email }, (err, user) => {
-        // if err or no user
-        if (err || !user)
-            return res.status("401").json({
-                error: "User with that email does not exist!",
-            });
+  if (!req.body) return res.status(400).json({ message: "No request body" });
+  if (!req.body.email) {
+    return res.status(400).json({ message: "No Email in request body" });
+  }
+  const { email, vaccinationName, vaccinationTime, name, address } = req.body;
+  // find the user based on email
+  User.findOne({ email }, (err, user) => {
+    // if err or no user
+    if (err || !user)
+      return res.status("401").json({
+        error: "User with that email does not exist!",
+      });
 
-        // email data
-        const emailData = {
-            from: "noreply@node-react.com",
-            to: email,
-            subject: vaccinationName,
-            text: `Hi ${name}! \n You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}`,
-            html: `<p>Hi ${name}</p> <p>You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}</p>`,
-        };
+    // email data
+    const emailData = {
+      from: "noreply@node-react.com",
+      to: email,
+      subject: vaccinationName,
+      text: `Hi ${name}! \n You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}`,
+      html: `<p>Hi ${name}</p> <p>You have successfully registered for vaccination! Your vaccine time is: ${vaccinationTime}, at the address: ${address}</p>`,
+    };
 
-        sendEmail(emailData);
-        return res.status(200).json({
-            message: `You can check your vaccine time in your email.`,
-        });
+    sendEmail(emailData);
+    return res.status(200).json({
+      message: `You can check your vaccine time in your email.`,
     });
+  });
 };
 
 exports.listParticipantsByCenter = (req, res) => {
-    Vaccination.find({ ownership: req.profile._id })
-        .populate("ownership", "_id")
-        .sort("createdAt")
-        .exec((err, vaccinations) => {
-            if (err) {
-                return res.status(400).json({ error: err });
-            }
-            res.json(vaccinations);
-        });
+  Vaccination.find({ ownership: req.profile._id })
+    .populate("ownership", "_id")
+    .sort("createdAt")
+    .exec((err, vaccinations) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      res.json(vaccinations);
+    });
 };
